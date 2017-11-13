@@ -67,6 +67,37 @@ class Game {
   }
 
   detectWin() {
+    // check horizontal
+    // check vertical 
+    var checkH = 0;
+    var checkV = 0;
+    for (var i = 0; i < 3; i++) {
+      for (var j = 0; j < 3; j++) {
+        if(this.board[i][j] === 1) {
+          checkH += 1;
+        } else if (this.board[i][j] === 2) {
+          checkH -= 1;
+        }
+        if(this.board[j][i] === 1) {
+          checkV += 1;
+        } else if (this.board[j][i] === 2) {
+          checkV -= 1;
+        }
+      }  
+      if (checkH === 3 || checkV === 3) {
+        return 1;
+      }
+      if (checkV === -3 || checkV === -3) {
+        return 2;
+      }
+      checkH = 0;
+      checkV = 0;
+    }
+
+    
+    // check diagonal
+
+
     return null;
   }
 
@@ -75,10 +106,14 @@ class Game {
     console.log('\n\n');
 
     var curPlayer = 2;
-    while(!this.detectWin()) {
+    var winner = null;
+    while(!winner) {
       curPlayer = curPlayer === 1 ? 2 : 1;
       await this.playerMove(curPlayer);
+      winner = this.detectWin();
     }
+
+    console.log(`> GAME OVER!!! Winner is player${winner}`)
   }
 
   
